@@ -6,10 +6,9 @@ import com.example.redditspring.service.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.print.DocFlavor;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -27,6 +26,12 @@ public class AuthController {
 
             throw new SpringRedditException("Exception occurred when sending mail ");
         }
+    }
+
+    @GetMapping("accountVerification/{token}")
+    public ResponseEntity<String> verifyAccount(@PathVariable String token) throws SpringRedditException {
+        authService.verifyAccount(token);
+        return new ResponseEntity<>("Acttivated successfuly", HttpStatus.OK);
     }
 }
 
